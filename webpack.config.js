@@ -19,26 +19,29 @@ module.exports = {
 		      	'style-loader', 
 		      	'css-loader', 
 		      	{
-		          loader: 'stylus-loader',
-			          options: {
-			          	// Set Stylus Plugins via 'stylus-loader' options here
-			            use: [rupture()],
-			          },
-		         },
+			      loader: 'postcss-loader',
+			      options: {
+			        plugins: [
+			          lost,
+			        ]
+			      }
+			    },
+			    'stylus-loader'
 		      	],
 		      },
 		    ]
 		  },
 		plugins: [
-		/* Set Post Css Plugins + Stylus via 'poststylus' options here*/
-			new webpack.LoaderOptionsPlugin({
-				options: {
-					stylus: {
-					use: [poststylus([ 'lost' ])]
-					}
-				}
-
-			  }),
+		new webpack.LoaderOptionsPlugin({
+    test: /\.styl$/,
+    stylus: {
+      // You can have multiple stylus configs with other names and use them
+      // with `stylus-loader?config=otherConfig`.
+      default: {
+        use: [rupture()],
+      },
+    },
+  }),
 			new HtmlWebpackPlugin({
 				title: 'Homepage',
 				filename: 'index.html'
