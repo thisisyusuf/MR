@@ -1,0 +1,45 @@
+@import "styles.css";
+
+rupture.scale = 0 400px 600px 800px 1050px 1800px
+rupture.scale-names = 'xs' 's' 'm' 'l' 'xl' 'hd'
+
+body
+  margin 0
+
+div.container
+  lost-center 80%
+  lost-utility clearfix
+
+div.col
+  background-color white
+  lost-column 1/2
+  height 150px
+  +below(m)
+    lost-column 1
+
+nav.top-black-bar
+  background-color black
+  lost-utility clearfix
+
+nav.top-black-bar ul li
+  color white
+  margin-left 10px
+
+div.top-black-bar-left
+  lost-column 1/2
+
+div.top-black-bar-left ul, div.top-black-bar-right ul
+  -webkit-padding-start 0px
+  -webkit-margin-before 0em
+  -webkit-margin-after 0em
+
+div.top-black-bar-left ul li
+  float left
+  display inline
+
+div.top-black-bar-right
+  lost-column 1/2
+
+div.top-black-bar-right ul li
+  float right
+  display inline

@@ -6,7 +6,8 @@ var rupture = require('rupture');
 var lost = require('lost');
 var cssnano = require('cssnano');
 var autoprefixer = require('autoprefixer');
-var postcss-font-magician = require('postcss-font-magician');
+var postcssfontmagician = require('postcss-font-magician');
+var Extract = require('extract-text-webpack-plugin');
 
 module.exports = {
         entry: './src/index.js',
@@ -17,28 +18,52 @@ module.exports = {
 		module: {
 		    rules: [
 		      {
-		      	test: /\.styl$/, 
-		      	use: [
-		      	'style-loader', 
-		      	'css-loader', 
+		      	test: /\.styl$/,
+		      	use: Extract.extract({
+              fallbackLoader: 'style-loader',
+              loader: ['css-loader',
+  		      	{
+  			      loader: 'postcss-loader',
+  			      options: {
+  			        plugins: [
+  			          lost,
+  			          cssnano,
+  			          autoprefixer,
+  			          postcssfontmagician
+  			        ]
+  			      }
+  			    },
+  			    'stylus-loader'],
+            publicPath: '/dist',
+
+		      	/*'style-loader',
+		      	'css-loader',
 		      	{
 			      loader: 'postcss-loader',
 			      options: {
 			        plugins: [
-			          lost, 
-			          /*cssnano,*/ 
+			          lost,
+			          cssnano,
 			          autoprefixer,
-			          postcss-font-magician
-
+			          postcssfontmagician
 			        ]
 			      }
 			    },
-			    'stylus-loader'
-		      	],
+			    'stylus-loader'*/
+        })
 		      },
+          {
+                test: /\.(eot|svg|ttf|woff|woff2)$/,
+                loader: 'file-loader?name=styles/[name].[ext]'
+          },
 		    ]
 		  },
 		plugins: [
+      new Extract({
+        filename: "app.css",
+        disable: false,
+        allChunks: true
+      }),
 			new webpack.LoaderOptionsPlugin({
 				test: /\.styl$/,
 				stylus: {
@@ -66,5 +91,3 @@ module.exports = {
 			}),
 		]
 }
-
-
