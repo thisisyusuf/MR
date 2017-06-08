@@ -10,10 +10,12 @@ var postcssfontmagician = require('postcss-font-magician');
 var Extract = require('extract-text-webpack-plugin');
 
 module.exports = {
-        entry: './src/index.js',
+        entry: {
+          app: './src/index.js'
+      },
         output: {
         	path: path.resolve(__dirname, 'dist'),
-            filename: 'app.bundle.js'
+            filename: '[name].bundle.js'
 		},
 		module: {
 		    rules: [
@@ -23,34 +25,19 @@ module.exports = {
               fallbackLoader: 'style-loader',
               loader: ['css-loader',
   		      	{
-  			      loader: 'postcss-loader',
-  			      options: {
-  			        plugins: [
-  			          lost,
-  			          cssnano,
-  			          autoprefixer,
-  			          postcssfontmagician
-  			        ]
-  			      }
-  			    },
+    			      loader: 'postcss-loader',
+    			      options: {
+    			        plugins: [
+    			          lost,
+    			          /*cssnano,*/
+    			          autoprefixer,
+    			          postcssfontmagician
+      			        ]
+      			      }
+    			    },
   			    'stylus-loader'],
-            publicPath: '/dist',
-
-		      	/*'style-loader',
-		      	'css-loader',
-		      	{
-			      loader: 'postcss-loader',
-			      options: {
-			        plugins: [
-			          lost,
-			          cssnano,
-			          autoprefixer,
-			          postcssfontmagician
-			        ]
-			      }
-			    },
-			    'stylus-loader'*/
-        })
+            publicPath: ' ',
+            })
 		      },
           {
                 test: /\.(eot|svg|ttf|woff|woff2)$/,
